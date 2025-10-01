@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-  <TargetFramework>net8.0</TargetFramework>
-  <ImplicitUsings>enable</ImplicitUsings>
-  <Nullable>enable</Nullable>
+  <TargetFramework>netstandard2.0</TargetFramework>
   <Title>SouthAfricanIdValidator</Title>
   <Authors>Deadtrix21</Authors>
   <Company>noxius-studium - $(Authors)</Company>
@@ -14,7 +12,7 @@
   <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   <PackageReadmeFile>README.md</PackageReadmeFile>
   <Description>South African ID validation, extraction, and generation library.</Description>
-  <Version>1.0.2</Version>
+  <Version>1.0.4</Version>
   <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 </PropertyGroup>
 

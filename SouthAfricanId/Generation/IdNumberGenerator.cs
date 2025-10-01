@@ -1,14 +1,15 @@
 
+using System;
+using System.Linq;
 using SouthAfricanId.Models;
 using SouthAfricanId.Validation;
 
-namespace SouthAfricanId.Generation;
-
-
+namespace SouthAfricanId.Generation
+{
     public class IdNumberGenerator
-        /// <summary>
-        /// Provides methods to generate valid South African ID numbers based on input parameters or randomly.
-        /// </summary>
+    /// <summary>
+    /// Provides methods to generate valid South African ID numbers based on input parameters or randomly.
+    /// </summary>
     {
         private readonly Validator _validator = new Validator();
         private static readonly Random _rand = new Random();
@@ -82,4 +83,8 @@ namespace SouthAfricanId.Generation;
 
 
     }
+
+
+}
+
 
