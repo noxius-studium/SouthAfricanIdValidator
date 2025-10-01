@@ -1,36 +1,45 @@
+
 # SouthAfricanIdValidator
 
-This package provides robust validation and age extraction for South African ID numbers. It includes:
+This package provides robust validation, extraction, decoding, and generation for South African ID numbers. It includes:
 
 - Checksum validation
-- Date of birth extraction and validation
+- Date of birth and gender extraction
 - Age calculation (years, months, days)
+- ID number generation (random or parameterized)
+- Decoding of ID numbers into structured models
 
 ## Features
 
-- Validate South African ID numbers for correct format and checksum
-- Extract and validate date of birth from the ID number
-- Calculate age in years, months, and days
-- Encapsulate age details in a dedicated class
+- Validate South African ID numbers for correct format, date, and checksum
+- Extract date of birth, age, and gender from the ID number
+- Generate valid South African ID numbers (random or with parameters)
+- Decode ID numbers into structured models
 
 ## Usage Example
 
 ```csharp
-using SouthAfricanIdValidator;
+using SouthAfricanId;
+using SouthAfricanId.Models;
 
 class Program
 {
     static void Main()
     {
-        string idNumber = "5504191234567"; // Example ID number
-        var extracted = new RsaValidatorExtracted(idNumber);
+        // Generate a random valid ID number
+        var generator = new Generation.IdNumberGenerator();
+        string idNumber = generator.GenerateIdNumber();
 
-        if (extracted.Validate())
+        // Validate and decode the ID number
+        var decoder = new SouthAfricanIdDecoder();
+        var decoded = decoder.Decode(idNumber);
+
+        if (decoded != null)
         {
-            var ageInfo = extracted.AgeDetails;
-            Console.WriteLine($"Valid ID!");
-            Console.WriteLine($"Date of Birth: {ageInfo.DateOfBirth:yyyy-MM-dd}");
-            Console.WriteLine($"Age: {ageInfo.AgeString}");
+            Console.WriteLine($"Valid ID: {decoded.IdNumber}");
+            Console.WriteLine($"Date of Birth: {decoded.AgeInfo?.DateOfBirth:yyyy-MM-dd}");
+            Console.WriteLine($"Age: {decoded.AgeInfo?.AgeString}");
+            Console.WriteLine($"Gender: {decoded.Gender}");
         }
         else
         {
@@ -42,28 +51,46 @@ class Program
 
 ## How It Works
 
-- The `RsaValidator` class validates the ID number using the Luhn algorithm and checks the embedded date of birth.
-- The `RsaValidatorExtracted` class uses `RsaValidator` for validation and extracts age details if the ID is valid.
-- The `AgeInfo` class provides age in years, months, days, and the date of birth.
+- The `Validator` class validates the ID number using the Luhn algorithm and checks the embedded date of birth.
+- The `AgeExtraction` and `GenderExtraction` classes extract age and gender information from the ID number.
+- The `IdNumberGenerator` class generates valid ID numbers, either randomly or with parameters.
+- The `SouthAfricanIdDecoder` class decodes the ID number into a structured model (`DecodedIdModel`).
+- The `AgeInformation` class provides age in years, months, days, and the date of birth.
 
 ## API
 
-### RsaValidator
+### Validator
 
-- `IsValidId(string idNumber)` — Validates the ID number format and checksum
-- `IsValidIdDate(string idNumber)` — Validates the date of birth in the ID number
-- `Validate(string idNumber)` — Returns true if both checks pass
+- `Validate(string idNumber)` â€“ Validates the ID number format, date, and checksum
 
-### RsaValidatorExtracted
+### AgeExtraction
 
-- `Validate()` — Validates the ID number
-- `AgeDetails` — Returns an `AgeInfo` object with age and date of birth
+- `Extract(string idNumber)` â€“ Returns an `AgeInformation` object if extraction is successful
 
-### AgeInfo
+### GenderExtraction
 
-- `Years`, `Months`, `Days` — Age breakdown
-- `DateOfBirth` — Extracted date of birth
-- `AgeString` — Formatted age string
+- `Extract(string idNumber)` â€“ Returns a `Gender` enum value
+
+### IdNumberGenerator
+
+- `GenerateIdNumber(DateTime birthday, Gender gender, bool isCitizen = true)` â€“ Generates a valid ID number with parameters
+- `GenerateIdNumber()` â€“ Generates a random valid ID number
+
+### SouthAfricanIdDecoder
+
+- `Decode(string idNumber)` â€“ Returns a `DecodedIdModel` with all extracted info
+
+### AgeInformation
+
+- `Years`, `Months`, `Days` â€“ Age breakdown
+- `DateOfBirth` â€“ Extracted date of birth
+- `AgeString` â€“ Formatted age string
+
+### DecodedIdModel
+
+- `IdNumber` â€“ The decoded ID number
+- `AgeInfo` â€“ Extracted age information
+- `Gender` â€“ Extracted gender information
 
 ## License
 

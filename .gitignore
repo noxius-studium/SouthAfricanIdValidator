@@ -365,3 +365,6 @@ FodyWeavers.xsd
 #Ignore insiders AI rules
 .github\instructions\codacy.instructions.md
 ./.codacy
+publish.ps1
+key
+nuget.exe
