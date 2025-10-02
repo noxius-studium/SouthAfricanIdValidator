@@ -20,33 +20,41 @@ This package provides robust validation, extraction, decoding, and generation fo
 
 ```csharp
 using SouthAfricanId;
+using SouthAfricanId.Generation;
 using SouthAfricanId.Models;
 
-class Program
+namespace ConsoleApp2
 {
-    static void Main()
+    internal class Program
     {
-        // Generate a random valid ID number
-        var generator = new Generation.IdNumberGenerator();
-        string idNumber = generator.GenerateIdNumber();
-
-        // Validate and decode the ID number
-        var decoder = new SouthAfricanIdDecoder();
-        var decoded = decoder.Decode(idNumber);
-
-        if (decoded != null)
+        
+        static void Main(string[] args)
         {
-            Console.WriteLine($"Valid ID: {decoded.IdNumber}");
-            Console.WriteLine($"Date of Birth: {decoded.AgeInfo?.DateOfBirth:yyyy-MM-dd}");
-            Console.WriteLine($"Age: {decoded.AgeInfo?.AgeString}");
-            Console.WriteLine($"Gender: {decoded.Gender}");
-        }
-        else
-        {
-            Console.WriteLine("Invalid ID number.");
+            SouthAfricanIdDecoder decoder = new SouthAfricanIdDecoder();
+            SouthAfricanId.Generation.IdNumberGenerator generator = new SouthAfricanId.Generation.IdNumberGenerator();
+            var idNumber = generator.GenerateIdNumber();
+            Console.WriteLine(idNumber);
+
+
+            var decoded = decoder.Decode(idNumber);
+
+            if (decoded != null)
+            {
+                Console.WriteLine($"Valid ID: {decoded.IdNumber}");
+                Console.WriteLine($"Date of Birth: {decoded.AgeInfo?.DateOfBirth:yyyy-MM-dd}");
+                Console.WriteLine($"Age: {decoded.AgeInfo?.AgeString}");
+                Console.WriteLine($"Gender: {decoded.Gender}");
+                Console.WriteLine($"Older than 18: {decoded.AgeInfo.Years >= 18}");
+            }
+            else
+            {
+                Console.WriteLine("Invalid ID number.");
+            }
         }
     }
 }
+
+
 ```
 
 ## How It Works
